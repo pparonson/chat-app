@@ -18,6 +18,10 @@ let count = 0;
 io.on("connection", socket => {
     console.log("A new user web socket connection established");
     socket.emit("updateCount");
+
+    socket.on("increment", () => {
+        console.log("a client increment was triggered");
+    });
 });
 
 server.listen(PORT, () => {
