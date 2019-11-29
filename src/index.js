@@ -15,13 +15,24 @@ app.use(express.static(public));
 
 io.on("connection", socket => {
     console.log("A new user web socket connection established");
+    // socket.emit broadcasts to new client only
     socket.emit("message", "Welcome!");
+    // socket.broadcast.emit broadcasts to all clients except socket.emit client
+    socket.broadcast.emit("message", "A new client has joined");
 
-    // socket.on("increment", () => {
-    //     console.log("a client increment was triggered");
-    //     count++;
-    //     socket.emit("updateCount", count);
-    // });
+    socket.on("sendMessage", message => {
+        console.log(
+            "A new client message has been received by the server: ",
+            message
+        );
+        // io obj broadcasts to all clients
+        io.emit("message", message);
+    });
+
+    // disconnect features are handled by socket.io library
+    socket.on("disconnect", () => {
+        io.emit("message", "A client has disconnected");
+    });
 });
 
 server.listen(PORT, () => {

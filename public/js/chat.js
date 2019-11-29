@@ -5,10 +5,12 @@ socket.on("message", msg => {
 });
 
 const messageForm = document.querySelector("#message-form");
-console.log("messageForm: ", messageForm);
 
 messageForm.addEventListener("submit", evt => {
+    // prevent form submit full page refresh
     evt.preventDefault();
-    const message = evt.target.elements[0].value;
+    // const message = evt.target.elements[0].value;
+    const message = evt.target.elements.message.value;
     console.log("message: ", message);
+    socket.emit("sendMessage", message);
 });
