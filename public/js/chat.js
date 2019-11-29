@@ -1,11 +1,14 @@
 const socket = io();
-console.log("get here?");
 
-socket.on("updateCount", count => {
-    console.log("updateCount", count);
+socket.on("message", msg => {
+    console.log("msg: ", msg);
 });
 
-document.querySelector("#increment").addEventListener("click", () => {
-    console.log("increment");
-    socket.emit("increment");
+const messageForm = document.querySelector("#message-form");
+console.log("messageForm: ", messageForm);
+
+messageForm.addEventListener("submit", evt => {
+    evt.preventDefault();
+    const message = evt.target.elements[0].value;
+    console.log("message: ", message);
 });

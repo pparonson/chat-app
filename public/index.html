@@ -7,9 +7,18 @@
     </head>
     <body>
         <h1>ChatApp</h1>
-	<button id="increment">+1</button>
+
+        <form id="message-form">
+            <input
+                name="message"
+                placeholder="Message"
+                required
+                autocomplete="off"
+            />
+            <button>Send</button>
+        </form>
 
         <script src="/socket.io/socket.io.js"></script>
-	<script src="./js/chat.js"></script>	
+        <script src="./js/chat.js"></script>
     </body>
 </html>
