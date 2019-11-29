@@ -21,6 +21,8 @@ io.on("connection", socket => {
 
     socket.on("increment", () => {
         console.log("a client increment was triggered");
+        count++;
+        socket.emit("updateCount", count);
     });
 });
 
