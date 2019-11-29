@@ -1,2 +1,6 @@
-// this script has access to socketio client fns
-io();
+const socket = io();
+console.log("get here?");
+
+socket.on("updateCount", () => {
+    console.log("updateCount");
+});
