@@ -20,13 +20,14 @@ io.on("connection", socket => {
     // socket.broadcast.emit broadcasts to all clients except socket.emit client
     socket.broadcast.emit("message", "A new client has joined");
 
-    socket.on("sendMessage", message => {
+    socket.on("sendMessage", (message, cbConfirmMsg) => {
         console.log(
             "A new client message has been received by the server: ",
             message
         );
         // io obj broadcasts to all clients
         io.emit("message", message);
+        cbConfirmMsg("Message delivered");
     });
 
     // disconnect features are handled by socket.io library
