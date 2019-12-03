@@ -8,8 +8,11 @@
     <body>
         <h1>ChatApp</h1>
 
+        <div id="messages"></div>
+
         <form id="message-form">
-            <input id="message-input"
+            <input
+                id="message-input"
                 name="message"
                 placeholder="Message"
                 required
@@ -18,6 +21,16 @@
             <button id="message-submit-button">Send</button>
         </form>
 
+        <script id="message-template" type="text/html">
+            <div>
+		<div>{{ msg }}</div>
+            </div>
+        </script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.1.0/mustache.js"
+            integrity="sha256-rP/7cD6sF9Rey5N+nwEgClCdovR+NIuUxWMkyqak9vU="
+            crossorigin="anonymous"
+        ></script>
         <script src="/socket.io/socket.io.js"></script>
         <script src="./js/chat.js"></script>
     </body>
