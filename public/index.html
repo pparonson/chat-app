@@ -22,10 +22,16 @@
         </form>
 
         <script id="message-template" type="text/html">
-            <div>
-		<div>{{ msg }}</div>
-            </div>
+                      <div>
+	    <div>{{ createdAt }} - {{ msg }}</div>
+                      </div>
         </script>
+
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"
+            integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ="
+            crossorigin="anonymous"
+        ></script>
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.1.0/mustache.js"
             integrity="sha256-rP/7cD6sF9Rey5N+nwEgClCdovR+NIuUxWMkyqak9vU="

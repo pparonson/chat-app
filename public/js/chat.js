@@ -10,8 +10,11 @@ const messageTemplate = document.querySelector("#message-template").innerHTML;
 const messageForm = document.querySelector("#message-form");
 
 socket.on("message", msg => {
-    console.log("msg: ", msg);
-    const html = Mustache.render(messageTemplate, { msg });
+    console.log(`MSG: ${msg.text}, ${msg.createdAt}`);
+    const html = Mustache.render(messageTemplate, {
+        msg: msg.text,
+        createdAt: moment(msg.createdAt).format("YYYYMMDD hh:mma")
+    });
     $messages.insertAdjacentHTML("beforeend", html);
 });
 
