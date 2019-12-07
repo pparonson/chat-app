@@ -16,13 +16,28 @@ app.use(express.static(public));
 
 io.on("connection", socket => {
     console.log("A new user web socket connection established");
-    // socket.emit broadcasts to new client only
-    socket.emit("message", generateMessage("Welcome!"));
-    // socket.broadcast.emit broadcasts to all clients except socket.emit client
-    socket.broadcast.emit(
-        "message",
-        generateMessage("A new client has joined")
-    );
+    // // socket.emit broadcasts to new client only
+    // socket.emit("message", generateMessage("Welcome!"));
+    // // socket.broadcast.emit broadcasts to all clients except socket.emit client
+    // socket.broadcast.emit(
+    //     "message",
+    //     generateMessage("A new client has joined")
+    // );
+
+    socket.on("join", ({ username, room }) => {
+        console.log(`username: ${username}, room: ${room}`);
+        socket.join(room);
+        // send msg to clients in a room
+        // io.to.emit();
+        // socket.broadcast.to()
+
+        // socket.emit broadcasts to new client only
+        socket.emit("message", generateMessage("Welcome!"));
+        // socket.broadcast.emit broadcasts to all clients except socket.emit client
+        socket.broadcast
+            .to(room)
+            .emit("message", generateMessage(`${username} has joined ${room}`));
+    });
 
     socket.on("sendMessage", (message, cbConfirmMsg) => {
         console.log(
@@ -32,13 +47,6 @@ io.on("connection", socket => {
         // io obj broadcasts to all clients
         io.emit("message", generateMessage(message));
         cbConfirmMsg("Message delivered");
-    });
-
-    socket.on("join", ({ username, room }) => {
-        console.log(`username: ${username}, room: ${room}`);
-        socket.join(room);
-        // send msg to clients in a room
-        io.to.emit();
     });
 
     // disconnect features are handled by socket.io library
