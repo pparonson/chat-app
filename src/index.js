@@ -34,6 +34,13 @@ io.on("connection", socket => {
         cbConfirmMsg("Message delivered");
     });
 
+    socket.on("join", ({ username, room }) => {
+        console.log(`username: ${username}, room: ${room}`);
+        socket.join(room);
+        // send msg to clients in a room
+        io.to.emit();
+    });
+
     // disconnect features are handled by socket.io library
     socket.on("disconnect", () => {
         io.emit("message", generateMessage("A client has disconnected"));

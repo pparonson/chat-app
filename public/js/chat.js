@@ -9,6 +9,11 @@ const $messages = document.querySelector("#messages");
 const messageTemplate = document.querySelector("#message-template").innerHTML;
 const messageForm = document.querySelector("#message-form");
 
+// Options
+const { username, room } = Qs.parse(location.search, {
+    ignoreQueryPrefix: true
+});
+
 socket.on("message", msg => {
     console.log(`MSG: ${msg.text}, ${msg.createdAt}`);
     const html = Mustache.render(messageTemplate, {
@@ -39,3 +44,5 @@ messageForm.addEventListener("submit", evt => {
         $messageFormInput.focus();
     });
 });
+
+socket.emit("join", { username, room });

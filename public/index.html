@@ -6,38 +6,37 @@
         <title>ChatApp</title>
     </head>
     <body>
-        <h1>ChatApp</h1>
-
-        <div id="messages"></div>
-
-        <form id="message-form">
+        <div>
+            <div>
+                <h2>Join</h2>
+                <form action="/chat.html">
+			<div>
+			<label>Display Name</label>
             <input
-                id="message-input"
-                name="message"
-                placeholder="Message"
+                id="display-name-input"
+	type="text"
+                name="username"
+                placeholder="Display Name"
                 required
                 autocomplete="off"
             />
-            <button id="message-submit-button">Send</button>
-        </form>
-
-        <script id="message-template" type="text/html">
-                             <div>
-            <div>{{ createdAt }} - {{ msg }}</div>
-                             </div>
-        </script>
-
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"
-            integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ="
-            crossorigin="anonymous"
-        ></script>
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.1.0/mustache.min.js"
-            integrity="sha256-MPgtcamIpCPKRRm1ppJHkvtNBAuE71xcOM+MmQytXi8="
-            crossorigin="anonymous"
-        ></script>
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="./js/chat.js"></script>
+			</div>
+			<div>
+			<label>Room Name</label>
+            <input
+                id="room-name-input"
+		type="text"
+                name="room"
+                placeholder="Room Name"
+                required
+                autocomplete="off"
+            />
+			</div>
+			<div>
+            <button id="message-submit-button">Join</button>
+			</div>
+		</form>
+            </div>
+        </div>
     </body>
 </html>
