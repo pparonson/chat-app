@@ -2,9 +2,9 @@ let users = [];
 
 // addUser
 const addUser = ({ id, username, room }) => {
-    // clean the data
-    username = username ? username.trim().toLowerCase() : "";
-    room = room ? room.trim().toLowerCase() : "";
+    const cleanedData = cleanData(username, room);
+    username = cleanedData.username;
+    room = cleanedData.room;
 
     if (!username || !room) {
         return {
@@ -13,16 +13,9 @@ const addUser = ({ id, username, room }) => {
     }
     console.log(`id: ${id}, username: ${username}, room: ${room}`);
 
-    // check for existing user
-    const existingUser = users.find(user => {
-        return user.room === room && user.username === username;
-    });
-
-    // validate username
-    if (existingUser) {
-        return {
-            error: `username: ${username} already exists in room: ${room}`
-        };
+    const ret = validateUser(username, room);
+    if (ret.error) {
+        return ret;
     }
 
     // store user
@@ -38,5 +31,29 @@ const addUser = ({ id, username, room }) => {
 // getUser
 
 // getUsersInRoom
+
+// helper fns
+// clean the data
+function cleanData(username, room) {
+    username = username ? username.trim().toLowerCase() : "";
+    room = room ? room.trim().toLowerCase() : "";
+    return { username, room };
+}
+
+// check for existing user
+// validate username
+function validateUser(username, room) {
+    const existingUser = users.find(user => {
+        return user.room === room && user.username === username;
+    });
+
+    if (existingUser) {
+        return {
+            error: `username: ${username} already exists in room: ${room}`
+        };
+    } else {
+        return {};
+    }
+}
 
 addUser({ id: 42, username: "ellebelle", room: "room1" });
