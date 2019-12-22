@@ -1,4 +1,7 @@
-let users = [{ id: 23, username: "pparonson", room: "room1" }];
+let users = [
+    { id: 23, username: "pparonson", room: "room1" },
+    { id: 1, username: "Angela ", room: " Room2 " }
+];
 
 // addUser
 const addUser = ({ id, username, room }, _users) => {
@@ -14,7 +17,6 @@ const addUser = ({ id, username, room }, _users) => {
 
     const ret = validateUser(username, room, users);
     if (ret.error) {
-        console.log("Error: ", ret.error);
         return ret;
     }
 
@@ -26,6 +28,11 @@ const addUser = ({ id, username, room }, _users) => {
 };
 
 // removeUser
+const removeUser = (id, _users) => {
+    users = _users.filter(user => {
+        return user.id !== id;
+    });
+};
 
 // getUser
 
@@ -53,10 +60,13 @@ function validateUser(username, room, users) {
     }
 }
 
-let result = addUser(
-    { id: 42, username: "ElleBelle ", room: " Room2 " },
-    users
-);
-console.log("result: ", result);
-console.log("users2: ", users);
-console.log("users.length: ", users.length);
+// let testAddUserNew = addUser(
+//     { id: 42, username: "ElleBelle ", room: " Room2 " },
+//     users
+// );
+// let testAddUserExisting = addUser(
+//     { id: 23, username: "pparonson", room: "room1" },
+//     users
+// );
+let testRemoveUser = removeUser(23, users);
+console.log("testResult: ", users);
