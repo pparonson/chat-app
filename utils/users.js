@@ -35,8 +35,24 @@ const removeUser = (id, _users) => {
 };
 
 // getUser
+const getUser = (id, _users) => {
+    let user = _users.find(user => user.id === id);
+    if (!user) {
+        return { error: "User not found!" };
+    } else {
+        return user;
+    }
+};
 
 // getUsersInRoom
+const getUsersInRoom = (room, _users) => {
+    const usersInRoom = _users.filter(user => user.room === room);
+    if (usersInRoom.length < 1) {
+        return { error: `No users found in ${room}` };
+    } else {
+        return usersInRoom;
+    }
+};
 
 // helper fns
 function cleanData(username, room) {
@@ -60,13 +76,23 @@ function validateUser(username, room, users) {
     }
 }
 
-// let testAddUserNew = addUser(
+// let testAddUserNew1 = addUser(
 //     { id: 42, username: "ElleBelle ", room: " Room2 " },
+//     users
+// );
+// let testAddUserNew2 = addUser(
+//     { id: 43, username: "Kendra ", room: " Room1 " },
+//     users
+// );
+// let testAddUserNew3 = addUser(
+//     { id: 42, username: "Brooke ", room: " Room1 " },
 //     users
 // );
 // let testAddUserExisting = addUser(
 //     { id: 23, username: "pparonson", room: "room1" },
 //     users
 // );
-let testRemoveUser = removeUser(23, users);
-console.log("testResult: ", users);
+// let testRemoveUser = removeUser(23, users);
+// let testGetUser = getUser(23, users);
+// let testGetUsersInRoom = getUsersInRoom("room5", users);
+// console.log("testResult: ", testGetUsersInRoom);
