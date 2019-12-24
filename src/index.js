@@ -3,6 +3,7 @@ const express = require("express");
 const http = require("http");
 const socketio = require("socket.io");
 const { generateMessage } = require("../utils/messages");
+const usersUtil = require("../utils/users");
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -24,9 +25,19 @@ io.on("connection", socket => {
     //     generateMessage("A new client has joined")
     // );
 
-    socket.on("join", ({ username, room }) => {
+    socket.on("join", ({ username, room }, cb) => {
         console.log(`username: ${username}, room: ${room}`);
-        socket.join(room);
+        const { error, user } = usersUtil.addUser({
+            id: socket.id,
+            username,
+            room
+        });
+        if (error) {
+            // return to stop execution
+            return cb(error);
+        }
+
+        socket.join(user.room);
         // send msg to clients in a room
         // io.to.emit();
         // socket.broadcast.to()
@@ -35,8 +46,14 @@ io.on("connection", socket => {
         socket.emit("message", generateMessage("Welcome!"));
         // socket.broadcast.emit broadcasts to all clients except socket.emit client
         socket.broadcast
-            .to(room)
-            .emit("message", generateMessage(`${username} has joined ${room}`));
+            .to(user.room)
+            .emit(
+                "message",
+                generateMessage(`${user.username} has joined ${user.room}`)
+            );
+
+        // success
+        cb();
     });
 
     socket.on("sendMessage", (message, cbConfirmMsg) => {
@@ -51,7 +68,13 @@ io.on("connection", socket => {
 
     // disconnect features are handled by socket.io library
     socket.on("disconnect", () => {
-        io.emit("message", generateMessage("A client has disconnected"));
+        const user = usersUtil.removeUser(socket.id);
+        if (user) {
+            io.to(user.room).emit(
+                "message",
+                generateMessage(`${user.username} has left room ${user.room}`)
+            );
+        }
     });
 });
 

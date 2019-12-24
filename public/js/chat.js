@@ -45,4 +45,6 @@ messageForm.addEventListener("submit", evt => {
     });
 });
 
-socket.emit("join", { username, room });
+socket.emit("join", { username, room }, error => {
+    console.log("Error: ", error);
+});

@@ -4,7 +4,7 @@ let users = [
 ];
 
 // addUser
-const addUser = ({ id, username, room }, _users) => {
+const addUser = ({ id, username, room }) => {
     const cleanedData = cleanData(username, room);
     username = cleanedData.username;
     room = cleanedData.room;
@@ -22,21 +22,23 @@ const addUser = ({ id, username, room }, _users) => {
 
     // store user
     const user = { id, username, room };
-    users = [..._users, user];
+    users = [...users, user];
 
-    return { ...user };
+    return { user: { ...user } };
 };
 
 // removeUser
-const removeUser = (id, _users) => {
-    users = _users.filter(user => {
-        return user.id !== id;
-    });
+const removeUser = id => {
+    const index = users.findIndex(user => user.id === id);
+    // mutates original array and returns array containing the deleted elements or undefined
+    if (index !== -1) {
+        return users.splice(index, 1)[0];
+    }
 };
 
 // getUser
-const getUser = (id, _users) => {
-    let user = _users.find(user => user.id === id);
+const getUser = id => {
+    let user = users.find(user => user.id === id);
     if (!user) {
         return { error: "User not found!" };
     } else {
@@ -45,8 +47,8 @@ const getUser = (id, _users) => {
 };
 
 // getUsersInRoom
-const getUsersInRoom = (room, _users) => {
-    const usersInRoom = _users.filter(user => user.room === room);
+const getUsersInRoom = room => {
+    const usersInRoom = users.filter(user => user.room === room);
     if (usersInRoom.length < 1) {
         return { error: `No users found in ${room}` };
     } else {
@@ -76,23 +78,25 @@ function validateUser(username, room, users) {
     }
 }
 
-// let testAddUserNew1 = addUser(
-//     { id: 42, username: "ElleBelle ", room: " Room2 " },
-//     users
-// );
-// let testAddUserNew2 = addUser(
-//     { id: 43, username: "Kendra ", room: " Room1 " },
-//     users
-// );
-// let testAddUserNew3 = addUser(
-//     { id: 42, username: "Brooke ", room: " Room1 " },
-//     users
-// );
-// let testAddUserExisting = addUser(
-//     { id: 23, username: "pparonson", room: "room1" },
-//     users
-// );
-// let testRemoveUser = removeUser(23, users);
+let testAddUserNew1 = addUser(
+    { id: 42, username: "ElleBelle ", room: " Room2 " },
+    users
+);
+let testAddUserNew2 = addUser(
+    { id: 43, username: "Kendra ", room: " Room1 " },
+    users
+);
+let testAddUserNew3 = addUser(
+    { id: 44, username: "Brooke ", room: " Room1 " },
+    users
+);
+let testAddUserExisting = addUser(
+    { id: 23, username: "pparonson", room: "room1" },
+    users
+);
+let testRemoveUser = removeUser(23);
 // let testGetUser = getUser(23, users);
 // let testGetUsersInRoom = getUsersInRoom("room5", users);
-// console.log("testResult: ", testGetUsersInRoom);
+console.log("testResult: ", testRemoveUser);
+
+module.exports = { addUser, removeUser, getUser, getUsersInRoom };
