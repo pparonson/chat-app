@@ -36,7 +36,7 @@ messageForm.addEventListener("submit", evt => {
         $messageFormButton.removeAttribute("disabled");
 
         if (cbMsg) {
-            console.log(cbMsg);
+            console.log(`cbMsg: ${cbMsg}`);
         }
 
         // clear input msgs

@@ -1,6 +1,6 @@
 let users = [
-    { id: 23, username: "pparonson", room: "room1" },
-    { id: 1, username: "Angela ", room: " Room2 " }
+    // { id: 23, username: "pparonson", room: "room1" },
+    // { id: 1, username: "Angela ", room: " Room2 " }
 ];
 
 // addUser
@@ -78,25 +78,25 @@ function validateUser(username, room, users) {
     }
 }
 
-let testAddUserNew1 = addUser(
-    { id: 42, username: "ElleBelle ", room: " Room2 " },
-    users
-);
-let testAddUserNew2 = addUser(
-    { id: 43, username: "Kendra ", room: " Room1 " },
-    users
-);
-let testAddUserNew3 = addUser(
-    { id: 44, username: "Brooke ", room: " Room1 " },
-    users
-);
-let testAddUserExisting = addUser(
-    { id: 23, username: "pparonson", room: "room1" },
-    users
-);
-let testRemoveUser = removeUser(23);
+// let testAddUserNew1 = addUser(
+//     { id: 42, username: "ElleBelle ", room: " Room2 " },
+//     users
+// );
+// let testAddUserNew2 = addUser(
+//     { id: 43, username: "Kendra ", room: " Room1 " },
+//     users
+// );
+// let testAddUserNew3 = addUser(
+//     { id: 44, username: "Brooke ", room: " Room1 " },
+//     users
+// );
+// let testAddUserExisting = addUser(
+//     { id: 23, username: "pparonson", room: "room1" },
+//     users
+// );
+// let testRemoveUser = removeUser(23);
 // let testGetUser = getUser(23, users);
 // let testGetUsersInRoom = getUsersInRoom("room5", users);
-console.log("testResult: ", testRemoveUser);
+// console.log("testResult: ", testRemoveUser);
 
 module.exports = { addUser, removeUser, getUser, getUsersInRoom };

@@ -48,14 +48,18 @@ io.on("connection", socket => {
         cb();
     });
 
-    socket.on("sendMessage", (message, cbConfirmMsg) => {
+    socket.on("sendMessage", (message, cb) => {
         console.log(
             "A new client message has been received by the server: ",
             message
         );
+
+        const user = usersUtil.getUser(socket.id);
+        console.log("user: ", user);
+
         // io obj broadcasts to all clients
-        io.emit("message", generateMessage(message));
-        cbConfirmMsg("Message delivered");
+        io.to(user.room).emit("message", generateMessage(message));
+        cb("Message delivered");
     });
 
     // disconnect features are handled by socket.io library
