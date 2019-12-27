@@ -24,6 +24,7 @@ io.on("connection", socket => {
             username,
             room
         });
+
         if (error) {
             // return to stop execution
             return cb(error);
@@ -35,13 +36,19 @@ io.on("connection", socket => {
         // socket.broadcast.to()
 
         // socket.emit broadcasts to new client only
-        socket.emit("message", generateMessage("Welcome!"));
+        socket.emit(
+            "message",
+            generateMessage({ username: "Admin" }, "Welcome!")
+        );
         // socket.broadcast.emit broadcasts to all clients except socket.emit client
         socket.broadcast
             .to(user.room)
             .emit(
                 "message",
-                generateMessage(`${user.username} has joined ${user.room}`)
+                generateMessage(
+                    { username: "Admin" },
+                    `${user.username} has joined ${user.room}`
+                )
             );
 
         // success
@@ -58,7 +65,8 @@ io.on("connection", socket => {
         console.log("user: ", user);
 
         // io obj broadcasts to all clients
-        io.to(user.room).emit("message", generateMessage(message));
+        io.to(user.room).emit("message", generateMessage(user, message));
+
         cb("Message delivered");
     });
 
@@ -68,7 +76,10 @@ io.on("connection", socket => {
         if (user) {
             io.to(user.room).emit(
                 "message",
-                generateMessage(`${user.username} has left room ${user.room}`)
+                generateMessage(
+                    { username: "Admin" },
+                    `${user.username} has left ${user.room}`
+                )
             );
         }
     });

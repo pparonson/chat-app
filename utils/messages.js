@@ -1,5 +1,5 @@
-const generateMessage = text => {
-    return { text, createdAt: new Date().getTime() };
+const generateMessage = (user, text) => {
+    return { user, text, createdAt: new Date().getTime() };
 };
 
 module.exports = { generateMessage };
