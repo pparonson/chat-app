@@ -16,15 +16,7 @@ const public = path.join(__dirname, "../public");
 app.use(express.static(public));
 
 io.on("connection", socket => {
-    console.log("A new user web socket connection established");
-    // // socket.emit broadcasts to new client only
-    // socket.emit("message", generateMessage("Welcome!"));
-    // // socket.broadcast.emit broadcasts to all clients except socket.emit client
-    // socket.broadcast.emit(
-    //     "message",
-    //     generateMessage("A new client has joined")
-    // );
-
+    // console.log("A new user web socket connection established");
     socket.on("join", ({ username, room }, cb) => {
         console.log(`username: ${username}, room: ${room}`);
         const { error, user } = usersUtil.addUser({

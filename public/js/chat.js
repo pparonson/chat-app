@@ -46,5 +46,9 @@ messageForm.addEventListener("submit", evt => {
 });
 
 socket.emit("join", { username, room }, error => {
-    console.log("Error: ", error);
+    if (error) {
+        // console.log("Error: ", error);
+        alert(`Error: ${error}`);
+        location.href = "/";
+    }
 });
